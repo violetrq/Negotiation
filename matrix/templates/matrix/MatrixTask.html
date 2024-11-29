@@ -1,0 +1,204 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Round {{ round_number }} of {{ num_rounds }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% block styles %}
+    <style>
+        .otree-timer {
+            display: none !important;
+        }
+    </style>
+    {% endblock %}
+        <div class="timer-box">
+            Time left: <span id="timer"></span>
+        </div>
+
+        <div id="matrix">
+            {% for row in matrix %}
+                <div class="row">
+                    {% for cell in row %}
+                        <button type="button" class="cell">{{ cell }}</button>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" id="submit-button" class="btn-primary">Submit</button>
+
+        {% next_button %}
+
+        {{ formfield 'time_spent' label="" }}
+        {{ formfield_errors 'time_spent' }}
+    </div>
+
+    <script>
+        console.log("JavaScript is running");
+
+        let selectedNumbers = [];
+        let startTime = new Date().getTime();
+        let timerInterval;
+        let submissionMade = false;
+
+        function startTimer() {
+            let timeLeft = 60;
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                document.getElementById('timer').textContent = formatTime(timeLeft);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timeExpired = false;
+                    disableAllButtons();
+                    enableNextButton();
+                    document.getElementById('form').submit();
+                }
+            }, 1000);
+        }
+
+        function formatTime(seconds) {
+            let minutes = Math.floor(seconds / 60);
+            let remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        }
+
+        function toggleNumber(button, rowIndex, colIndex) {
+            console.log("Toggle number called for", rowIndex, colIndex);
+            let index = selectedNumbers.findIndex(num => num[0] === rowIndex && num[1] === colIndex);
+            if (index > -1) {
+                selectedNumbers.splice(index, 1);
+                button.classList.remove('selected');
+            } else if (selectedNumbers.length < 2) {
+                selectedNumbers.push([rowIndex, colIndex]);
+                button.classList.add('selected');
+            }
+            console.log("Selected numbers:", selectedNumbers);
+            document.getElementById('submit-button').disabled = selectedNumbers.length !== 2;
+        }
+
+
+        function submitAnswer() {
+            if (selectedNumbers.length === 2) {
+                let endTime = new Date().getTime();
+                let timeSpent = (endTime - startTime) / 1000;
+                document.getElementById('id_time_spent').value = timeSpent;
+                liveSend({
+                    'index1': selectedNumbers[0],
+                    'index2': selectedNumbers[1],
+                    'time_spent': timeSpent
+                });
+                submissionMade = true;
+            }
+        }
+
+        function liveRecv(data) {
+            console.log("Live receive:", data);
+            if (data.correct) {
+                clearInterval(timerInterval);
+                disableAllButtons();
+                enableNextButton();
+                alert('Your answer has been submitted.');
+
+            }
+        }
+
+        function resetSelection() {
+            selectedNumbers = [];
+            let cells = document.getElementsByClassName('cell');
+            for (let cell of cells) {
+                cell.classList.remove('selected');
+            }
+            document.getElementById('submit-button').disabled = true;
+            document.getElementById('submit-button').classList.remove('submitted');
+        }
+
+        function disableAllButtons() {
+            let cells = document.getElementsByClassName('cell');
+            for (let cell of cells) {
+                cell.disabled = true;
+            }
+        }
+
+        function enableNextButton() {
+            let nextButton = document.getElementById('otree-next-button');
+            if (nextButton) {
+                nextButton.style.display = 'inline-block';
+                nextButton.disabled = false;
+            } else {
+                console.error("Next button not found");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let cells = document.getElementsByClassName('cell');
+            for (let i = 0; i < cells.length; i++) {
+                let rowIndex = Math.floor(i / 4);  // for 4 columns
+                let colIndex = i % 4;
+                cells[i].onclick = function(event) {
+                    event.preventDefault();
+                    if (!submissionMade) {  // Remove the timeExpired check
+                        toggleNumber(this, rowIndex, colIndex);
+                    }
+                };
+            }
+            let submitButton = document.getElementById('submit-button');
+            if (submitButton) {
+                submitButton.onclick = function(event) {
+                    event.preventDefault();
+                    submitAnswer();
+                };
+                submitButton.disabled = true;
+            } else {
+                console.error("Submit button not found");
+            }
+            let nextButton = document.getElementById('otree-next-button');
+            if (nextButton) {
+                nextButton.style.display = 'none';
+                nextButton.disabled = true;
+            } else {
+                console.error("Next button not found");
+            }
+            startTimer();
+
+            // Prevent form submission if no submission has been made
+            document.querySelector('form').onsubmit = function(event) {
+                if (!submissionMade && !timeExpired) {
+                    event.preventDefault();
+                    alert('Please make a submission or wait for the timer to expire before proceeding.');
+                }
+            };
+        });
+    </script>
+
+    <style>
+        /* ... existing styles ... */
+        .cell {
+            width: 60px;
+            height: 60px;
+            margin: 2px;
+            font-size: 18px;
+            border: 1px solid #cccccc;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .cell.selected {
+            background-color: #bbdefb !important;
+        }
+        #submit-button.submitted {
+            background-color: #4CAF50;
+        }
+        #otree-next-button {
+            display: none;
+        }
+        #id_time_spent {
+            display: none;
+        }
+    </style>
+{% endblock %}

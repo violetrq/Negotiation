@@ -1,0 +1,22 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Bargaining Results
+{% endblock %}
+
+{% block content %}
+    <h3>Bargaining Results</h3>
+
+    {% if player.role == 'Worker' %}
+        <p>You (the Worker) completed {{ player.num_correct }} out of {{ Constants.num_rounds }} tasks correctly in the matrix game.</p>
+    {% else %}
+        <p>The Worker completed {{ worker_num_correct }} out of {{ Constants.num_rounds }} tasks correctly in the matrix game.</p>
+    {% endif %}
+
+    <p>The final agreed salary is: {{ deal_price }}</p>
+
+    <p>Your payoff is: {{ player.payoff }}</p>
+
+    {% next_button %}
+{% endblock %}

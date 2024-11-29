@@ -1,0 +1,19 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Matrix Task Results
+{% endblock %}
+
+{% block content %}
+    <h3>Your Performance</h3>
+
+    {% if is_worker %}
+        <p>You completed {{ num_correct }} out of {{ Constants.num_rounds }} tasks correctly.</p>
+        <p>These results will be shared with your Recruiter for the next stage of the experiment.</p>
+    {% else %}
+        <p>You are the Recruiter. The Worker completed {{ num_correct }} out of {{ Constants.num_rounds }} tasks correctly.</p>
+    {% endif %}
+
+    {% next_button %}
+{% endblock %}

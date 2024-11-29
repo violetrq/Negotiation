@@ -1,0 +1,20 @@
+{{ block title }}
+    Experiment Concluded
+{{ endblock }}
+
+{{ block content }}
+
+<div class="card bg-light m-3">
+    <div class="card-body">
+        <h3>Thank you for your time</h3>
+
+        {% if player.left_voluntarily %}
+            <p>You have chosen not to participate in the experiment. Thank you for your consideration.</p>
+        {% elif player.forced_to_leave %}
+            <p>We regret to inform you that the experiment has ended. Your partner has chosen not to participate, and as this is an interactive experiment, we are unable to continue without both participants.</p>
+            <p>To compensate you for your time and willingness to participate, we will provide you with ${{ Constants.compensation_amount }}. Thank you for your understanding.</p>
+        {% endif %}
+    </div>
+</div>
+
+{{ endblock }}

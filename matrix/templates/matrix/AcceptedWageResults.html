@@ -1,0 +1,18 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{{ block title }}
+    Final Payment Results
+{{ endblock }}
+
+{{ block content }}
+    {{ if is_worker }}
+        <p>You have accepted the suggested wage of {{ suggested_wage }}.</p>
+        <p>This will be your final payment for the task.</p>
+    {{ else }}
+        <p>The worker has accepted the suggested wage of {{ suggested_wage }}.</p>
+        <p>Your payment will be {{ total_contribution }} minus the worker's wage.</p>
+    {{ endif }}
+
+    <button class="otree-btn-next btn btn-primary">Next</button>
+{{ endblock }}

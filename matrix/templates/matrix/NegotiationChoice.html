@@ -1,0 +1,32 @@
+{% extends "global/Page.html" %}
+{% block title %}
+    Negotiation Decision
+{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+    {% if role == 'Worker' %}
+        {% if worker_rank %}
+            <p>Your rank among workers: {{ worker_rank }} out of {{ num_workers }}</p>
+        {% endif %}
+    {% else %}
+        {% if recruiter_rank %}
+            <p>Your rank among recruiters: {{ recruiter_rank }} out of {{ num_recruiters }}</p>
+        {% endif %}
+    {% endif %}
+
+    {% if suggested_wage %}
+        <p>Your suggested wage based on your performance is: ${{ suggested_wage }}</p>
+    {% endif %}
+
+    {% if has_ai_expert and role == 'Worker' %}
+        <p>You have access to an AI expert who can assist you in negotiations. The AI expert will be available to help you during the negotiation process if you choose to negotiate.</p>
+    {% endif %}
+</div>
+
+<div class="mb-3">
+    {% formfield player.negotiation_choice %}
+</div>
+
+{% next_button %}
+{% endblock %}

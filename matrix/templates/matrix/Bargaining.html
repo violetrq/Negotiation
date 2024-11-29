@@ -1,0 +1,44 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Wage Negotiation
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="info-box">
+            <h4>Wage Negotiation</h4>
+            {% if is_worker %}
+                <p>Your suggested wage: {{ suggested_wage }}</p>
+                {% if has_ai_expert %}
+                    <div class="alert alert-info">
+                        AI Expert Advice: [Your AI advice content here]
+                    </div>
+                {% endif %}
+            {% else %}
+                <p>Worker's suggested wage: {{ suggested_wage }}</p>
+            {% endif %}
+
+            {{ next_button }}
+        </div>
+    </div>
+
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .info-box {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .alert {
+            margin: 20px 0;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "global/Page.html" %}
+{% block title %}
+    Wage Negotiation
+{% endblock %}
+
+{% block content %}
+    <div class="mb-3">
+        <p>Initial suggested wage: {{ suggested_wage }}</p>
+
+        {% if is_worker %}
+            {% if has_ai_expert %}
+                <div class="alert alert-info">
+                    <p>You have access to an AI expert to assist in negotiations.</p>
+                    <p>Based on market data, the AI suggests:</p>
+                    <ul>
+                        <li>Similar positions typically range around this suggested wage level</li>
+                        <li>Consider discussing your performance metrics</li>
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="counter_offer">Your counter offer:</label>
+                <input type="number" class="form-control" name="counter_offer" step="0.1" min="0" required>
+            </div>
+        {% else %}
+            <div class="form-group">
+                <label for="recruiter_response">Your response to worker's proposal:</label>
+                <select class="form-control" name="recruiter_response" required>
+                    <option value="accept">Accept worker's proposal</option>
+                    <option value="counter">Make counter offer</option>
+                    <option value="reject">Reject and keep original wage</option>
+                </select>
+            </div>
+
+            <div id="counter_offer_section" class="form-group mt-3" style="display:none;">
+                <label for="recruiter_counter">Your counter offer:</label>
+                <input type="number" class="form-control" name="recruiter_counter" step="0.1" min="0">
+            </div>
+        {% endif %}
+    </div>
+
+    {% next_button %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelector('select[name="recruiter_response"]').addEventListener('change', function() {
+    const counterSection = document.getElementById('counter_offer_section');
+    counterSection.style.display = this.value === 'counter' ? 'block' : 'none';
+});
+</script>
+{% endblock %}

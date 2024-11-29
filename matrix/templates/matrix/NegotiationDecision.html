@@ -1,0 +1,29 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Negotiation Decision
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="info-box">
+            <h4>Your Results</h4>
+            <p>Your rank: {{ rank }}</p>
+            <p>Suggested wage: {{ suggested_wage }}</p>
+
+            {% if has_ai_expert %}
+                <div class="alert alert-info">
+                    <strong>You have been assigned an AI expert to help you with negotiations!</strong>
+                </div>
+            {% endif %}
+
+            <p>Would you like to negotiate your wage or accept the suggested amount?</p>
+
+            {{ formfields }}
+
+            {{ next_button }}
+        </div>
+    </div>
+</div>
+{% endblock %}

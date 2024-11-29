@@ -1,0 +1,279 @@
+{{ block title }}
+    Decision-making experiment
+{{ endblock }}
+
+{{ block content }}
+
+<div class="card">
+    <div class="card-header">
+        <h3>Experiment Instructions</h3>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info" role="alert">
+            This is an experiment in the economics of decision-making in online labor platforms such as Upwork and Freelancer. You will be randomly assigned as either a worker or recruiter. Please read all instructions carefully before proceeding.
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Role Assignment and Experimental Structure
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>You will be randomly assigned as either a Worker or Recruiter</li>
+                    <li>This role assignment is permanent throughout the experiment</li>
+                    <li>The experiment consists of two phases:
+                        <ol>
+                            <li>Performance evaluation phase</li>
+                            <li>Negotiation phase</li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Phase 1: Performance Evaluation Through Mathematical Task
+            </div>
+            <div class="card-body">
+                <div class="alert alert-secondary">
+                    <p>Workers will be randomly matched with recruiters for a math proofreading task opportunity. Proofreaders must ensure accuracy and clarity of math exercises, examples, and solutions. Performance in the qualification task strongly correlates with math proofreading abilities.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                For Workers
+                            </div>
+                            <div class="card-body">
+                                <p>Performance evaluated against other Workers:</p>
+                                <ul>
+                                    <li>Highest performance: $2.00 contribution</li>
+                                    <li>Second-highest performance: $1.50 contribution</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                For Recruiters
+                            </div>
+                            <div class="card-body">
+                                <p>Performance evaluated against one other Recruiter:</p>
+                                <ul>
+                                    <li>Highest performance: $3.00 contribution</li>
+                                    <li>Second-highest performance: $2.50 contribution</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning mt-3">
+                    <p>Note: In case of equal performance, contribution levels will be randomly determined.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Phase 2: Negotiation Process
+            </div>
+            <div class="card-body">
+                <p>After performance evaluation, each Worker will be randomly and anonymously paired with a Recruiter. The joint revenue equals the sum of both participants' contribution levels from Phase 1.</p>
+
+                <div class="card mb-3">
+                    <div class="card-header bg-info text-white">
+                        Worker Options
+                    </div>
+                    <div class="card-body">
+                        <h5>Option 1: Accept the Suggested Wage</h5>
+                        <ul>
+                            <li>Immediately concludes the economic portion</li>
+                            <li>Worker receives the suggested wage</li>
+                            <li>Recruiter receives remaining revenue (joint revenue minus suggested wage)</li>
+                            <li>Both proceed to post-experimental survey</li>
+                        </ul>
+
+                        <h5>Option 2: Initiate Negotiation</h5>
+                        <ul>
+                            <li>Activates 3-minute negotiation period</li>
+                            <li>Both parties access negotiation interface</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <p>Note: Recruiters do not need to make any choice at this stage.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <h4>Negotiation Rules and Procedures</h4>
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Time Limit
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>You have <strong>3 minutes</strong> to reach an agreement</li>
+                    <li>A countdown timer will be displayed on your screen</li>
+                    <li>The timer starts when both participants enter the negotiation phase</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Communication Tools
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>Chat window for discussions</li>
+                    <li>Wage proposal interface for submitting offers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Making and Accepting Proposals
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>Both parties can submit wage proposals at any time</li>
+                    <li>Submit all proposals through the designated wage input box</li>
+                    <li>All proposals will be visible to both parties</li>
+                    <li>Only the most recent proposal from each party is valid</li>
+                    <li>Click the "Accept" button next to a proposal to agree to it</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Negotiation Results
+            </div>
+            <div class="card-body">
+                <h5>If Agreement is Reached:</h5>
+                <ul>
+                    <li>Worker receives: Agreed wage amount</li>
+                    <li>Recruiter receives: Total revenue minus agreed wage</li>
+                </ul>
+
+                <h5>If No Agreement is Reached:</h5>
+                <ul>
+                    <li>The suggested wage becomes the default</li>
+                    <li>Both parties incur a $1.00 penalty</li>
+                    <li>Worker receives: Suggested wage - $1.00</li>
+                    <li>Recruiter receives: Remaining revenue - $1.00</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary">
+                Chat Guidelines
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>DO:</h5>
+                        <ul class="text-success">
+                            <li>Keep all communication anonymous</li>
+                            <li>Focus on wage negotiation</li>
+                            <li>Maintain professional behavior</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>DO NOT:</h5>
+                        <ul class="text-danger">
+                            <li>Share personal information</li>
+                            <li>Reveal your identity</li>
+                            <li>Use inappropriate language</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-warning">
+                    Breaking these rules may result in payment forfeiture.
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Payment Details
+            </div>
+            <div class="card-body">
+                <h5>Base Payment</h5>
+                <ul>
+                    <li>All participants receive $1.50 for completing Phase 1 (math maze)</li>
+                </ul>
+
+                <h5>Additional Earnings</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>For Workers:</h6>
+                        <ul>
+                            <li>With agreement: Final negotiated wage</li>
+                            <li>Without agreement: Suggested wage - $1.00</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>For Recruiters:</h6>
+                        <ul>
+                            <li>With agreement: Joint revenue - worker's wage</li>
+                            <li>Without agreement: Joint revenue - suggested wage - $1.00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Important Protocols
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li>Read all screen instructions thoroughly</li>
+                    <li>Use 'OK' or 'Continue' buttons when prompted</li>
+                    <li>Stay at your assigned computer</li>
+                    <li>Only communicate through the provided interface</li>
+                    <li>Raise your hand if you need help</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="alert alert-secondary">
+            <p><em>Note: All decisions and communications in this experiment are anonymous and will be used for research purposes only.</em></p>
+        </div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Confirmation of Participation</h3>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info" role="alert">
+            <p>Having reviewed the experimental instructions, please indicate whether you wish to proceed with participation in this study.</p>
+        </div>
+
+        <div class="form-group">
+            <p class="mb-4">Do you understand the instructions and agree to participate in this experiment according to the specified procedures?</p>
+
+            <div class="d-flex justify-content-center">
+                {% formfields %}
+            </div>
+
+            <div class="text-center mt-4">
+                <p><em>Note: Your participation is entirely voluntary. You may decline to participate without any adverse consequences.</em></p>
+                {% next_button %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ endblock }}

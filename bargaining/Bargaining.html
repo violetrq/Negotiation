@@ -1,0 +1,223 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Salary Negotiation
+{% endblock %}
+
+{% block content %}
+
+<p>
+    You are the {{ player.role }}.
+    Please negotiate with the {{ player.other_role }} below.
+</p>
+
+<table class="table">
+    <tr>
+        <th>Your current proposal</th>
+        <td id="my-proposal">(none)</td>
+        <td>
+            <input type="number" id="my_offer" step="0.01" min="0" max="10">
+            <button type="button" onclick="sendOffer()" id="btn-offer">Make new offer</button>
+        </td>
+    </tr>
+    <tr>
+        <th>{{ player.other_role }} proposal</th>
+        <td id="other-proposal">(none)</td>
+        <td>
+            <button type="button" id="btn-accept" onclick="sendAccept(this)" style="display: none">Accept</button>
+        </td>
+    </tr>
+</table>
+
+<div class="row">
+    {% if player.is_worker %}
+    <div class="col-md-6">
+        <h3>Chat with AI Expert</h3>
+        <div id="expert-chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
+        <input type="text" id="expert-input" style="width: 80%;" placeholder="Ask the expert...">
+        <button onclick="sendExpertMessage()">Ask</button>
+    </div>
+    {% endif %}
+    <div class="col-md-{% if player.is_worker %}6{% else %}12{% endif %}">
+        <h3>Negotiate with {{ player.other_role }}</h3>
+        <div id="negotiation-chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
+        <input type="text" id="negotiation-input" style="width: 80%;" placeholder="Type your message...">
+        <button onclick="sendNegotiationMessage()">Send</button>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submission prevented');
+        });
+    });
+
+    let my_offer = document.getElementById('my_offer');
+    let btnAccept = document.getElementById('btn-accept');
+    let msgOtherProposal = document.getElementById('other-proposal');
+    let msgMyProposal = document.getElementById('my-proposal');
+    let otherProposal;
+    let expertInput = document.getElementById('expert-input');
+    let negotiationInput = document.getElementById('negotiation-input');
+    let expertChatBox = document.getElementById('expert-chat-box');
+    let negotiationChatBox = document.getElementById('negotiation-chat-box');
+
+
+
+    function liveRecv(data) {
+        console.log("Received data:", data);  // Add this line for debugging
+        if ('proposals' in data) {
+            for (let [id_in_group, proposal] of data.proposals) {
+                if (id_in_group === js_vars.my_id) {
+                    msgMyProposal.innerHTML = cu(proposal)
+                } else {
+                    msgOtherProposal.innerHTML = cu(proposal);
+                    otherProposal = proposal;
+                    btnAccept.style.display = 'block';
+                }
+            }
+        }
+        if ('finished' in data) {
+            document.getElementById('form').submit();
+        }
+        if (data.type === 'ai_response') {
+            console.log("Received AI response:", data.message);
+            displayMessage(expertChatBox, 'AI Expert', data.message);
+        }
+        if ('negotiate_response' in data) {
+            displayMessage(negotiationChatBox, '{{ player.other_role }}', data.negotiate_response);
+        }
+    }
+
+
+
+function sendExpertMessage() {
+    if (!js_vars.is_worker) return;
+    if (!expertInput || !expertChatBox) {
+        console.error('Expert chat elements not found');
+        return;
+    }
+    let message = expertInput.value.trim();
+    if (message) {
+        console.log("Sending expert message:", message);
+        displayMessage(expertChatBox, 'You', message);
+        liveSend({type: 'ai_chat', message: message});
+        expertInput.value = '';
+    }
+}
+
+function sendNegotiationMessage() {
+    if (!negotiationInput || !negotiationChatBox) {
+        console.error('Negotiation chat elements not found');
+        return;
+    }
+    let message = negotiationInput.value.trim();
+    if (message) {
+        displayMessage(negotiationChatBox, 'You', message);
+        liveSend({type: 'negotiate', message: message});
+        negotiationInput.value = '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (expertInput) {
+        expertInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendExpertMessage();
+            }
+        });
+    }
+
+    if (negotiationInput) {
+        negotiationInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendNegotiationMessage();
+            }
+        });
+    }
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('Form submission prevented');
+    });
+
+    liveSend({});
+});
+
+    my_offer.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            sendOffer();
+        }
+    });
+
+    function sendOffer() {
+        let amount = parseFloat(my_offer.value);
+        if (amount < 0 || amount > 10) {
+            alert("Please enter an amount between 0 and 10.");
+            return;
+        }
+        liveSend({'type': 'propose', 'amount': amount})
+        my_offer.value = '';
+    }
+
+    function sendAccept(button) {
+        if (otherProposal !== undefined) {
+            console.log("Accepting proposal:", otherProposal); // Debug logging
+            liveSend({
+                'type': 'accept',
+                'amount': parseFloat(otherProposal) // Ensure amount is a number
+            });
+            button.disabled = true;  // Disable button
+            button.textContent = 'Accepted!';  // Visual feedback
+
+        // Show some feedback to user
+            msgOtherProposal.innerHTML += ' (Accepted)';
+        }
+    }
+
+    function cu(amount) {
+        return `${amount} points`;
+    }
+
+    function displayMessage(chatBox, sender, message) {
+        let messageElement = document.createElement('p');
+        messageElement.innerHTML = '<strong>' + sender + ':</strong> ' + message;
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+
+
+
+
+    if (expertInput) {
+        expertInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendExpertMessage();
+            }
+        });
+    }
+
+    negotiationInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendNegotiationMessage();
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+</script>
+{% endblock %}

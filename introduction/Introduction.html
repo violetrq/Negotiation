@@ -1,0 +1,21 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Introduction
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <h4>{{ introduction }}</h4>
+        <p>In this game, you will be negotiating with the {{ other_role }}.</p>
+        <p>Please read the following instructions carefully before proceeding to the negotiation.</p>
+        <!-- Add any additional instructions here if needed -->
+    </div>
+</div>
+
+{% next_button %}
+
+{% endblock %}

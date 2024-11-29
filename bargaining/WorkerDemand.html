@@ -1,0 +1,14 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Your Salary Demand
+{% endblock %}
+
+{% block content %}
+    <p>
+        You are the Worker. How much salary do you demand? (The Recruiter has a budget of {{ Constants.recruiter_budget }})
+    </p>
+    {% formfield group.worker_demand %}
+    {% next_button %}
+{% endblock %}

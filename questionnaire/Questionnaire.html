@@ -1,0 +1,49 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Post-Experiment Questionnaire
+{% endblock %}
+
+{% block content %}
+
+    <p>Your role in the experiment was: {{ participant.vars.role }}</p>
+
+    <p>Thank you for participating in our experiment. Please answer the following questions:</p>
+
+    <style>
+        .question-container {
+            margin-bottom: 2em;
+        }
+        .question-label {
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+        .answer-field {
+            margin-top: 0.5em;
+        }
+    </style>
+
+    {% for field in form %}
+        <div class="question-container">
+            <div class="question-label">
+                {% if field.name == 'why_future' %}
+                    Why did you choose that option for the previous question about using ChatGPT in the future?
+                {% else %}
+                    {{ field.label }}
+                {% endif %}
+            </div>
+            <div class="answer-field">
+                {{ field }}
+            </div>
+            {% if field.errors %}
+                <div class="alert alert-danger">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% next_button %}
+
+{% endblock %}

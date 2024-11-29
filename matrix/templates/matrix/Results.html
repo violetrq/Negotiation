@@ -1,0 +1,42 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="info-box">
+            <h4>Your Performance</h4>
+            <p>You solved {{ num_correct }} out of {{ total_rounds }} problems correctly.</p>
+
+            {% if is_worker %}
+                <h4>Your Ranking and Payment</h4>
+                <p>Your rank among workers: {{ rank }}</p>
+                <p>Your suggested wage: {{ suggested_wage }}</p>
+            {% else %}
+                <h4>Your Ranking and Payment</h4>
+                <p>Your rank among recruiters: {{ rank }}</p>
+                <p>Your payment: {{ suggested_wage }}</p>
+            {% endif %}
+        </div>
+
+        {% next_button %}
+    </div>
+
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .info-box {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Your Salary Offer
+{% endblock %}
+
+{% block content %}
+    <p>
+        You are the Recruiter. How much salary do you offer? (Your budget is {{ Constants.recruiter_budget }})
+    </p>
+    {% formfield group.recruiter_offer %}
+    {% next_button %}
+{% endblock %}

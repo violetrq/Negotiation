@@ -1,0 +1,21 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{{ block title }}
+    Waiting for Worker's Decision
+{{ endblock }}
+
+{{ block content }}
+    {{ if worker_decision != None }}
+        {{ if worker_decision }}
+            <p>Your paired worker has chosen to negotiate. You will proceed to the negotiation phase.</p>
+        {{ else }}
+            <p>Your paired worker has accepted the suggested wage of {{ suggested_wage }}.</p>
+            <p>You will proceed to the questionnaire.</p>
+        {{ endif }}
+    {{ else }}
+        <p>Waiting for your paired worker to make their decision...</p>
+    {{ endif }}
+
+    <button class="otree-btn-next btn btn-primary">Next</button>
+{{ endblock }}
