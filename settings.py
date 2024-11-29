@@ -44,10 +44,8 @@ SESSION_CONFIGS = [
 ROOMS = [
     dict(
         name='prolific',
-        display_name='Prolific Study',
-        wait_for_all_groups = False
-
-),
+        display_name='Prolific Study'
+    ),
 ]
 
 
