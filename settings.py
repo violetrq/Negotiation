@@ -41,6 +41,12 @@ SESSION_CONFIGS = [
     ),
 ]
 
+ROOM_DEFAULTS = {
+    'prolific': {
+        'display_name': 'Prolific Study',
+        'participant_label_file': ''
+    }
+}
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.
