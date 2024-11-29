@@ -3,51 +3,23 @@ import os
 from dotenv import load_dotenv
 
 SESSION_CONFIGS = [
-    dict(
-        name='full_experiment',
-        display_name="Full Experiment (Introduction+ Matrix +  Bargaining + Questionnaire)",
-        num_demo_participants=4,
-        app_sequence=['introduction','matrix',  'bargaining', 'questionnaire']
-    ),
-    dict(
-        name='introduction',
-        display_name="Introduction",
-        num_demo_participants=2,
-        app_sequence=['introduction']
-    ),
-    dict(
-        name='experiment_AI',
-        display_name="Experiment (Matrix +  Bargaining + Questionnaire)",
-        num_demo_participants=4,
-        app_sequence=['matrix', 'bargaining', 'questionnaire']
-    ),
+
     dict(
         name='experiment',
         display_name="Experiment ( Matrix +  Bargaining + Questionnaire)",
         num_demo_participants=4,
         app_sequence=['matrix', 'bargaining', 'questionnaire']
-    ),
-    dict(
-        name='matrix_game',
-        display_name="Matrix Game Only",
-        num_demo_participants=4,
-        app_sequence=['matrix']
-    ),
-    dict(
-        name='bargaining_with_ai',
-        display_name="Bargaining with AI Assistance",
-        num_demo_participants=4,
-        app_sequence=['bargaining']
-    ),
+    )
 ]
 
 ROOMS = [
     dict(
         name='prolific',
         display_name='Prolific Study',
-        session_config_name='experiment'  # 添加这行，使用你想要运行的实验配置名称
+        session_config_name='experiment',
+        wait_for_all_groups = False
 
-    ),
+),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
