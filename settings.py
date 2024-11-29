@@ -50,9 +50,6 @@ ROOMS = [
 ),
 ]
 
-ROOM_DEFAULTS = {
-    'prolific': 'experiment'  # 'experiment' 是你想使用的配置名
-}
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.
