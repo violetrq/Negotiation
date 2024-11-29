@@ -45,6 +45,8 @@ ROOMS = [
     dict(
         name='prolific',
         display_name='Prolific Study',
+        session_config_name='experiment'  # 添加这行，使用你想要运行的实验配置名称
+
     ),
 ]
 
