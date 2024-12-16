@@ -19,7 +19,7 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 1
     recruiter_budget = c(10)
-    negotiation_time = 180  # 3 minutes in seconds
+    negotiation_time = 300  # 5 minutes in seconds
     negotiation_penalty = c(1)  # $1 penalty for failed negotiations
     base_payment = c(1.50)  # Base payment for completing Phase 1
 

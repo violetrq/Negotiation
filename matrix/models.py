@@ -30,15 +30,15 @@ class Constants(BaseConstants):
     # Payment structure as per instructions
     base_payment = 1.50  # Base payment for completing Phase 1
     worker_payments = {
-        1: 2.00,  # Highest performing worker
-        2: 1.50   # Second highest performing worker
+        1: 1.50,  # Highest performing worker
+        2: 1.00   # Second highest performing worker
     }
     recruiter_payments = {
-        1: 3.00,  # Highest performing recruiter
-        2: 2.50   # Second highest performing recruiter
+        1: 2.50,  # Highest performing recruiter
+        2: 2.00   # Second highest performing recruiter
     }
     negotiation_penalty = 1.00  # Penalty for failed negotiation
-    negotiation_time = 180  # 3 minutes in seconds
+    negotiation_time = 300  # 5 minutes in seconds
 
 
 class Subsession(BaseSubsession):
@@ -72,7 +72,7 @@ class Group(BaseGroup):
 
         # Rank workers and calculate their wages
         sorted_workers = sorted(workers, key=lambda x: -x.num_correct)
-        base_wages = {1: 2, 2: 1.5}
+        base_wages = {1: 1.5, 2: 1.0}
         noise = [0.3, 0.2, 0.1]
 
         for rank, worker in enumerate(sorted_workers, 1):
@@ -84,11 +84,11 @@ class Group(BaseGroup):
 
         # Rank recruiters and set their wages based on rank
         sorted_recruiters = sorted(recruiters, key=lambda x: -x.num_correct)
-        recruiter_wages = {1: 3.0, 2: 2.5}  # Added rank 3 wage
+        recruiter_wages = {1: 2.5, 2: 2.0}  # Added rank 3 wage
         # Or alternatively, use get() with a default value:
         for rank, recruiter in enumerate(sorted_recruiters, 1):
             recruiter.recruiter_rank = rank
-            recruiter.suggested_wage = recruiter_wages.get(rank, 2.5)  # Default to 2.5 if rank not found
+            recruiter.suggested_wage = recruiter_wages.get(rank, 2.0)  # Default to 2.5 if rank not found
 
     def set_payoffs(self):
         players = self.get_players()
