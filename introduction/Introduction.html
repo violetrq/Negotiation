@@ -16,6 +16,16 @@ Introduction
     </div>
 </div>
 
-{% next_button %}
+<div class="card mt-4">
+    <div class="card-body">
+        <div class="form-group">
+            {% formfield "agreed_to_participate" %}
+            {% formfield_errors "agreed_to_participate" %}
+        </div>
+        <div class="text-center mt-3">
+            {% next_button %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -16,16 +16,8 @@ class Group(BaseGroup):
     pass
 
 class Player(BasePlayer):
-    agreed_to_participate = models.BooleanField(
-        choices=[
-            [True, 'Yes'],
-            [False, 'No'],
-        ],
-        label="Do you agree to participate in this experiment?"
-    )
     left_voluntarily = models.BooleanField(initial=False)
     forced_to_leave = models.BooleanField(initial=False)
-
     # Add fields for comprehension questions
     q1 = models.StringField(
         label="The experiment consists of...",
@@ -41,10 +33,10 @@ class Player(BasePlayer):
     q2 = models.StringField(
         label="If you achieve highest performance as a worker, your contribution will be...",
         choices=[
-            ['A', '$1.50'],
-            ['B', '$2.00'],
-            ['C', '$2.50'],
-            ['D', '$3.00']
+            ['A', '$1.00'],
+            ['B', '$1.50'],
+            ['C', '$2.00'],
+            ['D', '$2.50']
         ],
         widget=widgets.RadioSelect
     )
@@ -52,10 +44,10 @@ class Player(BasePlayer):
     q3 = models.StringField(
         label="If you achieve highest performance as a recruiter, your contribution will be...",
         choices=[
-            ['A', '$1.50'],
-            ['B', '$2.00'],
-            ['C', '$2.50'],
-            ['D', '$3.00']
+            ['A', '$1.00'],
+            ['B', '$1.50'],
+            ['C', '$2.00'],
+            ['D', '$2.50']
         ],
         widget=widgets.RadioSelect
     )
@@ -75,8 +67,8 @@ class Player(BasePlayer):
         label="During negotiations, you have...",
         choices=[
             ['A', '1 minute to reach agreement'],
-            ['B', '2 minutes to reach agreement'],
-            ['C', '3 minutes to reach agreement'],
+            ['B', '3 minutes to reach agreement'],
+            ['C', '5 minutes to reach agreement'],
             ['D', 'Unlimited time to reach agreement']
         ],
         widget=widgets.RadioSelect
