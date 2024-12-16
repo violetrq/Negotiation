@@ -8,45 +8,15 @@ SESSION_CONFIGS = [
         display_name="Full Experiment (Introduction+ Matrix +  Bargaining + Questionnaire)",
         num_demo_participants=4,
         app_sequence=['introduction','matrix',  'bargaining', 'questionnaire']
-    ),
-    dict(
-        name='introduction',
-        display_name="Introduction",
-        num_demo_participants=2,
-        app_sequence=['introduction']
-    ),
-    dict(
-        name='experiment_AI',
-        display_name="Experiment (Matrix +  Bargaining + Questionnaire)",
-        num_demo_participants=4,
-        app_sequence=['matrix', 'bargaining', 'questionnaire']
-    ),
-    dict(
-        name='experiment',
-        display_name="Experiment ( Matrix +  Bargaining + Questionnaire)",
-        num_demo_participants=4,
-        app_sequence=['matrix', 'bargaining', 'questionnaire']
-    ),
-    dict(
-        name='matrix_game',
-        display_name="Matrix Game Only",
-        num_demo_participants=4,
-        app_sequence=['matrix']
-    ),
-    dict(
-        name='bargaining_with_ai',
-        display_name="Bargaining with AI Assistance",
-        num_demo_participants=4,
-        app_sequence=['bargaining']
-    ),
+    )
 ]
 
-ROOM_DEFAULTS = {
-    'prolific': {
-        'display_name': 'Prolific Study',
-        'participant_label_file': ''
-    }
-}
+ROOMS = [
+    dict(
+        name='prolific',
+        display_name='Prolific Study'
+    ),
+]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.
